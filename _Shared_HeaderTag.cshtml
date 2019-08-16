@@ -1,0 +1,5 @@
+@if (Presentation.HeadingType != "hide") {
+  @Html.Raw("<" + Presentation.HeadingType + ">")
+    @Content.Title
+  @Html.Raw("</" + Presentation.HeadingType + ">")
+}

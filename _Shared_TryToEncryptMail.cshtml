@@ -1,0 +1,16 @@
+@*
+  Place parts of an email address in data attributes so that JavaScript can
+  rebuild it when needed. This is prevent robots from spamming `mailto` links.
+*@
+@{
+  var email = PageData["email"];
+
+  var isValid = new System.Text.RegularExpressions.Regex("^[^@]+@[^@]+\\.[^\\.]+$").IsMatch(email);
+  if (isValid) {
+    var madr = email.Split('@');
+    var madrSuf = new System.Text.RegularExpressions.Regex("\\.([^\\.]+)$").Split(madr[1]);
+    @:<span data-madr1="@madr[0]" data-madr2="@madrSuf[0]" data-madr3="@madrSuf[1]" data-linktext="@email"></span>
+  } else {
+    @:<span>@email</span>
+  }
+}
