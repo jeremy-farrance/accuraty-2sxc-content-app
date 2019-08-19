@@ -1,0 +1,26 @@
+{
+  "name": "accuraty-2sxc-content-app",
+  "version": "1.0.0",
+  "description": "Accuraty's 2sxc content app",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chrismlusk/accuraty-2sxc-content-app.git"
+  },
+  "author": "Chris Lusk",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chrismlusk/accuraty-2sxc-content-app/issues"
+  },
+  "homepage": "https://github.com/chrismlusk/accuraty-2sxc-content-app#readme",
+  "dependencies": {
+    "luminous-lightbox": "^2.3.2"
+  },
+  "devDependencies": {
+    "gulp": "^4.0.2"
+  }
+}
