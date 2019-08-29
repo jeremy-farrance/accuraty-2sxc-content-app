@@ -1,0 +1,32 @@
+@*
+  This sub template just places all the very-often used
+  style and link tags into the code.
+  We put this in a sub-template because we use it so often, and want to make sure
+  nobody accidentally uses the wrong url or forgets data-enableoptimizations
+*@
+
+@{
+  string assetList = PageData["assets"];
+  var assets = assetList.Split(',').Select(s => ((string)s).ToLower().Trim()).ToArray();
+  var all = assets.Contains("all");
+  var lightbox = all || assets.Contains("lightbox");
+  var styles = all || assets.Contains("styles");
+  var scripts = all || assets.Contains("scripts");
+  var height = all || assets.Contains("height");
+}
+
+@if (lightbox) {
+  var luminousCss = Dnn.Tab.SkinPath + "public/css/luminous-basic.min.css";
+  var luminousJs = Dnn.Tab.SkinPath + "public/js/luminous.min.js";
+  <link rel="stylesheet" href="@luminousCss" data-enableoptimizations="head" />
+  <script src="@luminousJs" data-enableoptimizations="head"></script>
+}
+
+@*
+  @if (styles) {
+    <link rel="stylesheet" href="@App.Path/dist/bs4.css" data-enableoptimizations="true" />
+  }
+  @if (scripts) {
+    <script type="text/javascript" src="@App.Path/dist/scripts.js" data-enableoptimizations="true"></script>
+  }
+*@

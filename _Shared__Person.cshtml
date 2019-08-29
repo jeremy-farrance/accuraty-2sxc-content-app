@@ -1,0 +1,47 @@
+@{
+  var p = PageData["data"];
+  var personCss = Dnn.Tab.SkinPath + "public/css/person.css";
+}
+
+<link rel="stylesheet" href="@personCss" data-enableoptimizations="head" />
+
+
+<div itemscope itemtype="http://schema.org/Person">
+  @if (Has(p.FullName)) {
+    <div class="person__name" itemprop="name">@p.FullName</div>
+  }
+  @if (Has(p.Position)) {
+    <div class="person__position" itemprop="jobTitle">@p.Position</div>
+  }
+  @if (Has(p.Email) || Has(p.Mobile) || Has(p.Phone)) {
+    <div class="person__contact">
+      @if (Has(p.Email)) {
+        <div class="person__contact__item" itemprop="email">
+          @RenderPage("_Shared__TryToEncryptMail.cshtml", new { email = p.Email })
+        </div>
+      }
+      @if (Has(p.Mobile)) {
+        <div class="person__contact__item">
+          <a href='tel:@p.Mobile.Replace(" ", "")' itemprop="telephone">@p.Mobile</a>
+        </div>
+      }
+      @if (Has(p.Phone)) {
+        <div class="person__contact__item">
+          <a href='tel:@p.Phone.Replace(" ", "")' itemprop="telephone">@p.Phone</a>
+        </div>
+      }
+    </div>
+  }
+  @if (Has(p.Description)) {
+    <div class="person__description" itemprop="description">
+      @Html.Raw((string)p.Description)
+    </div>
+  }
+</div>
+
+
+@functions {
+  public bool Has(string value) {
+    return !String.IsNullOrEmpty(value);
+  }
+}

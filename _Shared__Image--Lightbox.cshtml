@@ -1,0 +1,89 @@
+@{
+  // parameters passed in from the calling page
+  var img = PageData["img"];
+  int width = PageData["width"];
+  int height = PageData["height"] ?? 0;
+  bool isLoop = PageData["isLoop"] ?? false;
+  var lightboxClass = PageData["lightboxClass"] ?? "lightbox";
+
+  // configuration
+  bool useLightbox = Presentation.ImageLightbox != null && Presentation.ImageLightbox;
+  var PARTS = useLightbox ? "lightbox" : null;
+
+  bool IS_RETINA = true;
+
+  float ASPECT_RATIO = 9f / 16f;
+
+  int IMG_QUALITY = IS_RETINA ? 50 : 75;
+  int IMG_WIDTH = IS_RETINA ? width * 2 : width;
+  int IMG_HEIGHT = IS_RETINA ? height * 2 : height;
+
+  if (IMG_HEIGHT == 0 && isLoop) {
+    IMG_HEIGHT = (int)Math.Floor(IMG_WIDTH * ASPECT_RATIO);
+  }
+
+  int LIGHTBOX_IMG_QUALITY = IS_RETINA ? 75 : 90;
+  int LIGHTBOX_IMG_WIDTH = IS_RETINA ? 3200 : 1600;
+  int LIGHTBOX_IMG_HEIGHT = IS_RETINA ? 1800 : 900;
+}
+
+@RenderPage("_Shared - Assets.cshtml", new { parts = PARTS })
+
+@if (!String.IsNullOrEmpty(img.Image)) {
+  var hasCaption = !String.IsNullOrEmpty(img.ImageCaption);
+
+  var lightboxHref =
+    img.Image
+      + "?maxwidth=" + LIGHTBOX_IMG_WIDTH
+      + "&maxheight=" + LIGHTBOX_IMG_HEIGHT
+      + "&quality=" + LIGHTBOX_IMG_QUALITY;
+
+  var thumbnailSrc =
+    img.Image
+      + "?w=" + IMG_WIDTH
+      + "&h=" + IMG_HEIGHT
+      + "&quality=" + IMG_QUALITY
+      + "&mode=" + (isLoop ? "crop" : "max")
+      + "&scale=both"
+      + "&anchor=" + img.CropAnchor;
+
+  <div class="">
+    @if (useLightbox) {
+      @:<a class="@lightboxClass d-block" href="@lightboxHref">
+    }
+          <figure>
+            <img
+              class="img-fluid"
+              src="@thumbnailSrc"
+              alt="@img.Title"
+              data-caption="@(hasCaption ? img.ImageCaption : img.Title)"
+            />
+            @if (hasCaption) {
+              <figcaption class="mt-1">@img.ImageCaption</figcaption>
+            }
+          </figure>
+    @if (useLightbox) {
+      @:</a>
+    }
+  </div>
+}
+
+@*
+  Only trigger Luminous here if this is a single image and not a loop. Loops
+  use `LuminousGallery`, which is triggered from the shared image loop file.
+*@
+@if (useLightbox && !isLoop) {
+  <script defer>
+    (function() {
+      var selector = ".DnnModule-@Dnn.Module.ModuleID .@lightboxClass";
+
+      var options = {
+        caption: function(trigger) {
+          return trigger.querySelector('img').getAttribute('data-caption');
+        }
+      };
+
+      new window.Luminous(document.querySelector(selector), options);
+    })();
+  </script>
+}
