@@ -1,0 +1,12 @@
+@RenderPage("_Shared__Assets.cshtml", new { parts = "styles"})
+
+@{
+  // parameters passed in from the calling page
+  int width = PageData["width"];
+  int height = PageData["height"];
+}
+
+<div class="sc-element">
+  @Edit.Toolbar(Content)
+  <img class="" alt="@Content.Title" src="@Content.Image?w=@width&amp;h=@height&amp;scale=both&amp;mode=crop&amp;anchor=@Content.CropAnchor" />
+</div>

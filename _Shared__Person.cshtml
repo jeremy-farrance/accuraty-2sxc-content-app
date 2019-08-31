@@ -3,10 +3,9 @@
   var personCss = Dnn.Tab.SkinPath + "public/css/person.css";
 }
 
-<link rel="stylesheet" href="@personCss" data-enableoptimizations="head" />
+<link rel="stylesheet" href="@personCss" data-enableoptimizations="true" />
 
-
-<div itemscope itemtype="http://schema.org/Person">
+<div class="person__data" itemscope itemtype="http://schema.org/Person">
   @if (Has(p.FullName)) {
     <div class="person__name" itemprop="name">@p.FullName</div>
   }

@@ -1,0 +1,22 @@
+@{
+  var videoId = System.Text.RegularExpressions.Regex.Match(Content.VideoLink, "v=([^&]+)");
+	var youtubeMatch =
+      new System.Text.RegularExpressions.Regex(@"youtu(?:\.be|be\.com)/(?:.*v(?:/|=)|(?:.*/)?)([a-zA-Z0-9-_]+)").Match(Content.VideoLink);
+
+  if (youtubeMatch.Success) {
+    var lazyCss = "/Portals/_default/Containers/Accuraty/LazyYouTube.css";
+    var lazyJs = Dnn.Tab.SkinPath + "public/js/LazyYouTube.bundle.js";
+    <link rel="stylesheet" href="@lazyCss" data-enableoptimizations="true" />
+    <script src="@lazyJs" data-enableoptimizations="106:bottom"></script>
+  }
+}
+
+<div class="sc-element">
+  @Edit.Toolbar(Content)
+
+  @if (youtubeMatch.Success) {
+    <div class="lazy-yt" data-id="@youtubeMatch.Groups[1].Value"></div>
+  } else {
+    <div class="dnnFormMessage dnnFormWarning">Video not found. Please check Video-Link.</div>
+  }
+</div>

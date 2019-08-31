@@ -1,5 +1,9 @@
+@{
+  var title = PageData["title"] ?? Content.Title;
+}
+
 @if (Presentation.HeadingType != "hide") {
   @Html.Raw("<" + Presentation.HeadingType + ">")
-    @Content.Title
+    @title
   @Html.Raw("</" + Presentation.HeadingType + ">")
 }

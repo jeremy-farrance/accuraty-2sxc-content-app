@@ -27,7 +27,7 @@
   int LIGHTBOX_IMG_HEIGHT = IS_RETINA ? 1800 : 900;
 }
 
-@RenderPage("_Shared - Assets.cshtml", new { parts = PARTS })
+@RenderPage("_Shared__Assets.cshtml", new { parts = PARTS })
 
 @if (!String.IsNullOrEmpty(img.Image)) {
   var hasCaption = !String.IsNullOrEmpty(img.ImageCaption);
@@ -47,25 +47,23 @@
       + "&scale=both"
       + "&anchor=" + img.CropAnchor;
 
-  <div class="">
+  <figure>
     @if (useLightbox) {
       @:<a class="@lightboxClass d-block" href="@lightboxHref">
     }
-          <figure>
-            <img
-              class="img-fluid"
-              src="@thumbnailSrc"
-              alt="@img.Title"
-              data-caption="@(hasCaption ? img.ImageCaption : img.Title)"
-            />
-            @if (hasCaption) {
-              <figcaption class="mt-1">@img.ImageCaption</figcaption>
-            }
-          </figure>
+          <img
+            class="img-fluid"
+            src="@thumbnailSrc"
+            alt="@img.Title"
+            data-caption="@(hasCaption ? img.ImageCaption : img.Title)"
+          />
+          @if (hasCaption) {
+            <figcaption class="mt-1">@img.ImageCaption</figcaption>
+          }
     @if (useLightbox) {
       @:</a>
     }
-  </div>
+  </figure>
 }
 
 @*
@@ -80,7 +78,15 @@
       var options = {
         caption: function(trigger) {
           return trigger.querySelector('img').getAttribute('data-caption');
-        }
+        },
+        onOpen: function() {
+          var body = document.querySelector('body');
+          body.classList.add('has-overlay');
+        },
+        onClose: function() {
+          var body = document.querySelector('body');
+          body.classList.remove('has-overlay');
+        },
       };
 
       new window.Luminous(document.querySelector(selector), options);

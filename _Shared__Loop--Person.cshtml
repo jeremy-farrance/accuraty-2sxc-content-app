@@ -1,0 +1,47 @@
+@{
+  int columns = PageData["columns"] ?? 2;
+  var modifierClass = PageData["modifierClass"] ?? "";
+  bool showImage = PageData["showImage"] ?? true;
+  bool roundedImage = PageData["roundedImage"] ?? false;
+  int width = PageData["imageWidth"] ?? 379;
+  int height = PageData["imageHeight"] ?? 488;
+
+  if (roundedImage) {
+    height = width;
+  }
+
+  var personClasses = new List<string> { "sc-element person" };
+
+  if (!String.IsNullOrEmpty(modifierClass)) {
+    personClasses.Add(modifierClass);
+  }
+
+  if (!showImage) {
+    personClasses.Add("person--no-image");
+  }
+
+  var personCss = String.Join(" ", personClasses);
+}
+
+<div class="grid grid--person grid--@columns-columns">
+  @foreach (var person in AsDynamic(Data["Default"])) {
+    <div class="@personCss">
+      @Edit.Toolbar(person)
+      @if (showImage) {
+        <figure class="person__figure">
+          @if (!String.IsNullOrEmpty(person.Photo)) {
+            <img
+              class='person__image@(roundedImage ? " person__image--rounded" : null)'
+              src="@person.Photo?w=@width&amp;h=@height&amp;mode=crop&amp;quality=90"
+              alt="person.FullName"
+            />
+          } else {
+            <div class="person__placeholder-image"></div>
+          }
+        </figure>
+      }
+
+      @RenderPage("_Shared__Person.cshtml", new { data = person })
+    </div>
+  }
+</div>
