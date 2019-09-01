@@ -10,17 +10,17 @@
     height = width;
   }
 
-  var personClasses = new List<string> { "sc-element person" };
+  var personClassList = new List<string> { "sc-element person" };
 
   if (!String.IsNullOrEmpty(modifierClass)) {
-    personClasses.Add(modifierClass);
+    personClassList.Add(modifierClass);
   }
 
   if (!showImage) {
-    personClasses.Add("person--no-image");
+    personClassList.Add("person--no-image");
   }
 
-  var personCss = String.Join(" ", personClasses);
+  var personCss = String.Join(" ", personClassList);
 }
 
 <div class="grid grid--person grid--@columns-columns">
