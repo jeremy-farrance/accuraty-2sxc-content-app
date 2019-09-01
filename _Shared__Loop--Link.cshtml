@@ -1,0 +1,32 @@
+@{
+  int columns = PageData["columns"] ?? 3;
+  var containerClass = PageData["containerClass"] ?? "";
+  var itemClass = PageData["itemClass"] ?? "";
+  bool isGrid = PageData["isGrid"] ?? false;
+  bool hasImage = PageData["hasImage"] ?? false;
+  bool hasIcon = PageData["hasIcon"] ?? false;
+
+  var containerClassList = new List<string> { containerClass };
+
+  if (isGrid) {
+    containerClassList.Add("grid");
+    containerClassList.Add("grid--" + columns + "-columns");
+    containerClassList.Add("grid--link-item");
+  }
+
+  var containerCss = String.Join(" ", containerClassList);
+}
+
+<div class="@containerCss">
+  @foreach (var linkItem in AsDynamic(Data["Default"])) {
+    @RenderPage(
+      "_Shared__Link.cshtml",
+      new {
+        linkItem = linkItem,
+        itemClass = itemClass,
+        hasImage = hasImage,
+        hasIcon = hasIcon
+      }
+    )
+  }
+</div>

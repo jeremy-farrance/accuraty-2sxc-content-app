@@ -1,0 +1,58 @@
+@{
+  var linkItem = PageData["linkItem"];
+  var itemClass = PageData["itemClass"] ?? "";
+  var hasImage = PageData["hasImage"] ?? false;
+  var hasIcon = PageData["hasIcon"] ?? false;
+
+  // get helper commands
+  var Helpers = CreateInstance("_Helpers.cshtml");
+  var linkInfo = Helpers.LinkInfos(linkItem.Link, linkItem.Window, linkItem.Icon);
+
+  var itemClassList = new List<string> {
+    "sc-element",
+    "link-item",
+    itemClass,
+    hasImage ? "link-item--has-image" : "",
+    hasIcon ? "link-item--has-icon" : ""
+  };
+
+  var itemCss = String.Join(" ", itemClassList);
+}
+
+
+@if (linkInfo.Found) {
+  var linkItemStyles = Dnn.Tab.SkinPath + "public/css/link-item.css";
+  <link rel="stylesheet" href="@linkItemStyles" data-enableoptimizations="true" />
+
+  @Edit.Toolbar(linkItem)
+  <a
+    class="@itemCss"
+    href="@linkItem.Link"
+    target="@linkInfo.Window"
+    title="@linkItem.Title"
+  >
+    @if (hasImage || hasIcon) {
+      <figure class="link-item__figure">
+        @if (!String.IsNullOrEmpty(linkItem.Image)) {
+          <img
+            class="link-item__image"
+            src="@linkItem.Image?w=690&amp;h=345&amp;quality=80&amp;mode=crop&amp;scale=both"
+            alt="@linkItem.Title"
+          />
+        } else if (!String.IsNullOrEmpty(linkItem.hasIcon)) {
+          <div>ICON??????</div>
+        } else {
+          <div class="link-item__placeholder"></div>
+        }
+      </figure>
+    }
+    @if (!String.IsNullOrEmpty(linkItem.Title)) {
+      <h5 class="link-item__title">@linkItem.Title</h5>
+    }
+    @if (!String.IsNullOrEmpty(linkItem.Description)) {
+      <div class="link-item__description">
+        @Helpers.ConvertLineBreaks(linkItem.Description)
+      </div>
+    }
+  </a>
+}
