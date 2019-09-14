@@ -1,7 +1,16 @@
-@RenderPage(
-  "_Shared__Loop--Images.cshtml",
-  new {
-    columns = 1,
-    width = 1400
-  }
-)
+@{
+  int width = 1400;
+}
+
+@*
+  Does not use the `_Shared__Grid--Image.cshtml` template because a 1-column
+  grid is slightly different: no grid modifier class and no height variable.
+*@
+<div class="grid">
+  @RenderPage(
+    "_Shared__Loop--Image.cshtml",
+    new {
+      width = width
+    }
+  )
+</div>

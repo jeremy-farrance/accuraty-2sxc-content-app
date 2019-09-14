@@ -1,8 +1,14 @@
+@{
+  int columns = 4;
+  int width = 350;
+  int height = 250;
+}
+
 @RenderPage(
-  "_Shared__Loop--Images.cshtml",
+  "_Shared__Grid--Image.cshtml",
   new {
-    columns = 4,
-    width = 350,
-    height = 200
+    columns = columns,
+    width = width,
+    height = height
   }
 )

@@ -1,5 +1,4 @@
 @{
-  int columns = PageData["columns"] ?? 2;
   int width = PageData["width"];
   int? height = PageData["height"];
   var lightboxClass = PageData["lightboxClass"] ?? "lightbox";
@@ -7,23 +6,21 @@
   bool useLightbox = Presentation.ImageLightbox != null && Presentation.ImageLightbox;
 }
 
-<div class="grid grid--@columns-columns">
-  @foreach (var img in AsDynamic(Data["Default"])) {
-    <div class="sc-element">
-      @Edit.Toolbar(img)
-      @RenderPage(
-        "_Shared__Image--Lightbox.cshtml",
-        new {
-          isLoop = true,
-          img = img,
-          width = width,
-          height = height,
-          lightboxClass = lightboxClass
-        }
-      )
-    </div>
-  }
-</div>
+@foreach (var img in AsDynamic(Data["Default"])) {
+  <div class="sc-element">
+    @Edit.Toolbar(img)
+    @RenderPage(
+      "_Shared__Image--Lightbox.cshtml",
+      new {
+        isLoop = true,
+        img = img,
+        width = width,
+        height = height,
+        lightboxClass = lightboxClass
+      }
+    )
+  </div>
+}
 
 @*
   In order to show all images from a loop in a single lightbox, we invoke
@@ -32,31 +29,7 @@
 @if (useLightbox) {
   <script defer>
     (function() {
-      var selector = ".DnnModule-@Dnn.Module.ModuleID .@lightboxClass";
-
-      var galleryOptions = {
-        arrowNavigation: true
-      };
-
-      var options = {
-        caption: function(trigger) {
-          return trigger.querySelector('img').getAttribute('data-caption');
-        },
-        onOpen: function() {
-          var body = document.querySelector('body');
-          body.classList.add('has-overlay');
-        },
-        onClose: function() {
-          var body = document.querySelector('body');
-          body.classList.remove('has-overlay');
-        },
-      };
-
-      new window.LuminousGallery(
-        document.querySelectorAll(selector),
-        galleryOptions,
-        options
-      );
+      window.buildLuminousGallery('.DnnModule-@Dnn.Module.ModuleID .@lightboxClass');
     })();
   </script>
 }

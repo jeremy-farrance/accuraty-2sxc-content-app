@@ -1,0 +1,15 @@
+@{
+  int columns = PageData["columns"] ?? 3;
+  int width = PageData["width"] ?? 420;
+  int height = PageData["height"] ?? 250;
+}
+
+<div class="grid grid--@columns-columns">
+  @RenderPage(
+    "_Shared__Loop--Image.cshtml",
+    new {
+      width = width,
+      height = height
+    }
+  )
+</div>

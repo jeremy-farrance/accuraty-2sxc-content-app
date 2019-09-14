@@ -73,23 +73,7 @@
 @if (useLightbox && !isLoop) {
   <script defer>
     (function() {
-      var selector = ".DnnModule-@Dnn.Module.ModuleID .@lightboxClass";
-
-      var options = {
-        caption: function(trigger) {
-          return trigger.querySelector('img').getAttribute('data-caption');
-        },
-        onOpen: function() {
-          var body = document.querySelector('body');
-          body.classList.add('has-overlay');
-        },
-        onClose: function() {
-          var body = document.querySelector('body');
-          body.classList.remove('has-overlay');
-        },
-      };
-
-      new window.Luminous(document.querySelector(selector), options);
+      window.buildLuminous(".DnnModule-@Dnn.Module.ModuleID .@lightboxClass");
     })();
   </script>
 }

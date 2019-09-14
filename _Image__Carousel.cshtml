@@ -1,0 +1,42 @@
+@{
+  int width = 1200;
+  int height = 600;
+  var carouselClass = "carousel";
+
+  var carouselCss = Dnn.Tab.SkinPath + "public/css/carousel.css";
+  var carouselJs = Dnn.Tab.SkinPath + "public/js/carousel.bundle.js";
+}
+
+<link rel="stylesheet" href="@carouselCss" data-enableoptimizations="true" />
+<script src="@carouselJs" data-enableoptimizations="head"></script>
+
+
+<div class="@carouselClass">
+  @foreach (var slide in AsDynamic(Data["Default"])) {
+    <div class="carousel-cell sc-element">
+      @Edit.Toolbar(slide)
+      <img
+        class=""
+        src="@slide.Image?w=@width&h=@height&mode=crop"
+        alt="@slide.EntityTitle"
+      />
+    </div>
+  }
+</div>
+
+
+@*
+  Need to configure the carousel?
+
+  See `build-flickity.js` in the skin's `src/js/modules/` directory for the
+  core implementation. To change the carousel settings, pass in an object of
+  options to the invoked function below. The available Flickity options can
+  be found here: https://flickity.metafizzy.co/options.html
+*@
+
+<script>
+  (function() {
+    var options = {};
+    window.buildFlickity(".DnnModule-@Dnn.Module.ModuleID .@carouselClass", options);
+  })();
+</script>
