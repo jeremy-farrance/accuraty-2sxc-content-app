@@ -24,13 +24,13 @@
   var linkItemStyles = Dnn.Tab.SkinPath + "public/css/link-item.css";
   <link rel="stylesheet" href="@linkItemStyles" data-enableoptimizations="true" />
 
-  @Edit.Toolbar(linkItem)
   <a
     class="@itemCss"
     href="@linkItem.Link"
     target="@linkInfo.Window"
     title="@linkItem.Title"
   >
+    @Edit.Toolbar(linkItem)
     @if (hasImage || hasIcon) {
       <figure class="link-item__figure">
         @if (!String.IsNullOrEmpty(linkItem.Image)) {
