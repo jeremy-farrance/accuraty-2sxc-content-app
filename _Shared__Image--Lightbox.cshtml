@@ -64,16 +64,14 @@
       @:</a>
     }
   </figure>
-}
 
-@*
-  Only trigger Luminous here if this is a single image and not a loop. Loops
-  use `LuminousGallery`, which is triggered from the shared image loop file.
-*@
-@if (useLightbox && !isLoop) {
-  <script defer>
-    (function() {
-      window.buildLuminous(".DnnModule-@Dnn.Module.ModuleID .@lightboxClass");
-    })();
-  </script>
+  // Only trigger Luminous here if this is a single image and not a loop. Loops
+  // use `LuminousGallery`, which is triggered from the shared image loop file.
+  if (useLightbox && !isLoop) {
+    <script>
+      (function() {
+        window.buildLuminous(".DnnModule-@Dnn.Module.ModuleID .@lightboxClass");
+      })();
+    </script>
+  }
 }
