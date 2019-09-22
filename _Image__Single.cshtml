@@ -1,0 +1,15 @@
+@{
+  var img = Content;
+  int width = 1400;
+}
+
+<div class="sc-element">
+  @Edit.Toolbar(img)
+  @RenderPage(
+    "_Shared__Image--Lightbox.cshtml",
+    new {
+      img = img,
+      width = width
+    }
+  )
+</div>
