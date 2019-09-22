@@ -1,0 +1,13 @@
+@RenderPage("_Shared__Assets.cshtml", new { parts = "styles" })
+
+<div class="sc-element">
+  @Edit.Toolbar(Content)
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      @RenderPage("_Shared__HeaderTag.cshtml")
+      <div class="rich-text">
+        @Html.Raw(Content.Text)
+      </div>
+    </div>
+  </div>
+</div>

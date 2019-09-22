@@ -1,0 +1,20 @@
+@RenderPage("_Shared__Assets.cshtml", new { parts = "styles" })
+
+<div class="sc-element">
+  @Edit.Toolbar(Content)
+  <div class="row">
+    <div class="col-md-12">
+      @RenderPage("_Shared__HeaderTag.cshtml")
+      @RenderPage(
+        "_Shared__Image--Lightbox.cshtml",
+        new {
+          img = Content,
+          width = 600
+        }
+      )
+      <div class="rich-text">
+        @Html.Raw(Content.Text)
+      </div>
+    </div>
+  </div>
+</div>
